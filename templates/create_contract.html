@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Create contract
+{% endblock %}
+
+{% block body %}
+<H1>Create contract</H1>
+<form method="post">
+    Title:
+    <input type="text" name="title" id="title" class="form-control"><br>
+    Intro:
+    <textarea name="intro" id="intro" class="form-control" value="Abstract"></textarea><br>
+    Main text:
+    <textarea name="text" id="text" class="form-control" value="Main text"></textarea><br>
+    <input type="submit" class="btn btn-success" value="Submit">
+</form>
+{% endblock %}

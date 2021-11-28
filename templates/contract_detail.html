@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+
+{% block title %}
+{{ contract.title }}
+{% endblock %}
+
+{% block body %}
+<div class="container mt-5">
+    <H1>{{ contract.title }}</H1>   
+    
+    <div class="alert alert-info">
+        <p>{{ contract.text }}</p> 
+        <p>{{ contract.intro }}</p>
+        <p> <b>Date: {{ contract.date.date() }} </b> </p>
+        
+    </div>
+</div>
+
+
+{% endblock %}

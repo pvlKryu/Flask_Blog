@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+
+{% block title %}
+All contracts
+{% endblock %}
+
+{% block body %}
+<div class="container mt-5">
+    <H1>All contracts</H1>   
+    <!-- На вход получаем список, который нужно перебрать -->
+    {% for el in contracts %} 
+    <div class="alert alert-info">
+        <h2>{{ el.title }}</h2> 
+        <p>{{ el.intro }}</p>
+        <p> <b>Date: {{ el.date.date() }} </b> </p>
+        <a href="/contracts/{{ el.id }}" class="btn btn-warning"> More </a>
+    </div>
+    {% endfor %}
+</div>
+
+
+{% endblock %}

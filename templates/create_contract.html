@@ -5,14 +5,16 @@ Create contract
 {% endblock %}
 
 {% block body %}
+<div class="container mt-5">
 <H1>Create contract</H1>
-<form method="post">
+<form method="POST">
     Title:
     <input type="text" name="title" id="title" class="form-control"><br>
     Intro:
-    <textarea name="intro" id="intro" class="form-control" value="Abstract"></textarea><br>
+    <textarea name="intro" id="intro" class="form-control"></textarea><br>
     Main text:
-    <textarea name="text" id="text" class="form-control" value="Main text"></textarea><br>
+    <textarea name="text" id="text" class="form-control"></textarea><br>
     <input type="submit" class="btn btn-success" value="Submit">
 </form>
+</div>
 {% endblock %}

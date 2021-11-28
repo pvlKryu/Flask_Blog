@@ -1,6 +1,6 @@
 from flask import Flask, render_template, url_for, request, redirect
 from flask_sqlalchemy import SQLAlchemy  # Подключение БД
-from datetime import datetime
+from datetime import date, datetime
 
 from werkzeug.utils import redirect  # Импорт функции реального времени
 
@@ -19,7 +19,7 @@ class Contract(db.Model):  # создаем класс Договоры
     date = db.Column(db.DateTime, default=datetime.utcnow)
 
     def __repr__(self):  # По запросу будет выдаваться объект + ID
-        return '<Contracts %r>' % self.id
+        return '<Contract %r>' % self.id
 
 
 @app.route('/')
@@ -33,32 +33,44 @@ def about():
     return render_template("about.html")
 
 
+@app.route('/contracts')
+def contracts():
+    # Выводим все записи из БД сортируя по дате:
+    contracts = Contract.query.order_by(Contract.date.desc()).all()
+    # в шаблон передаем список контрактов
+    return render_template("contracts.html", contracts=contracts)
+
+
+@app.route('/contracts/<int:id>')
+def contract_detail(id):
+    # Выводим все записи из БД сортируя по дате:
+    contract = Contract.query.get(id)
+    # в шаблон передаем список контрактов
+    return render_template("contract_detail.html", contract=contract)
+
+
 @app.route('/create_contract', methods=['POST', 'GET'])
 def create_contract():
     if request.method == "POST":
-
         title = request.form['title']  # Заполняем поля из формы
         intro = request.form['intro']
         text = request.form['text']
-
         # Создаем объект, заполняем поля, передавая переменные
         contract = Contract(title=title, intro=intro, text=text)
-
         try:  # Обрабатываем ошибки
             # if title and intro and text:  # Проверка на заполненность
             db.session.add(contract)  # Добавляем объект
             db.session.commit()  # Сохраняем объект
-            # Если успешно - переводим на главную страницy
-            return redirect('/')
-            # return "dONE"
-            # else:
-            # return redirect('/create_contract')
+        # Если успешно - переводим на главную страницy:
+            return redirect('/contracts')
+        # return "dONE"
+        # else:
+        # return redirect('/create_contract')
         except:  # На случай ошибки
             return "Error 1"
-            # traceback.format_exc() # Код ошибки
+        # traceback.format_exc() # Код ошибки
 
     else:
-        # return "Error 2"
         return render_template("create_contract.html")
 
 

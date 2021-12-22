@@ -6,19 +6,19 @@
 
 {% block body %}
 <div class="container mt-5">
-    <H1>Договоры</H1>   
-    {% if contracts|length > 0 %}
+    <H1>Акты проверок</H1> 
+    {% if acts|length > 0 %}
         <!-- На вход получаем список, который нужно перебрать -->
-        {% for el in contracts %} 
+        {% for el in acts %} 
         <div class="alert alert-info">
             <h2>{{ el.title }}</h2> 
-            <p>{{ el.intro }}</p>
+            <p>{{ el.status }}</p>
             <p> <b>Дата: {{ el.date.date() }} </b> </p>
-            <a href="/contracts/{{ el.id }}" class="btn btn-warning"> Подробнее </a>
+            <a href="/acts/{{ el.id }}" class="btn btn-warning"> Подробнее</a>
         </div>
         {% endfor %}
     {% else: %}
-    <p>В базе данных нет договоров</p>
+    <p>В вашей базе данных нет актов проверок</p>    
     {% endif %}
 </div>
 

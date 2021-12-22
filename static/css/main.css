@@ -3,12 +3,13 @@
     border-bottom: 1px solid #e5e5e5;
 }
 
-*, ::after, ::before {
+*,
+::after,
+::before {
     box-sizing: border-box;
 }
-user agent stylesheet
 
-header {
+user agent stylesheet header {
     display: block;
 }
 
@@ -37,10 +38,10 @@ footer {
     display: block;
 }
 
-.form-signin{
+.form-signin {
     width: 100%;
     max-width: 330px;
     padding: 15px;
     margin: auto;
-    
+
 }

@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Редактирование договора
+{% endblock %}
+
+{% block body %}
+<div class="container mt-5">
+<H1>Редактирование договора</H1>
+<form method="POST">
+    Заголовок:
+    <input type="text" name="title" id="title" class="form-control" value="{{ contract.title }}" ><br>
+    Аннотация:
+    <textarea name="intro" id="intro" class="form-control" >{{ contract.intro }}</textarea><br>
+    Основной текст:
+    <textarea name="text" id="text" class="form-control" >{{ contract.text }}</textarea><br>
+    <input type="submit" class="btn btn-success" value="Обновить">
+</form>
+</div>
+{% endblock %}

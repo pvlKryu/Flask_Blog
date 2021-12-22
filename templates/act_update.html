@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Создание акта проверки
+{% endblock %}
+
+{% block body %}
+<div class="container mt-5">
+<H1>Cоздание акта проверки</H1>
+<form method="POST">
+
+    Заголовок:
+    <input type="text" name="title" id="title" class="form-control" value="{{ act.title }}"><br>
+    Номер договора:
+    <textarea name="contract_number" id="contract_number" class="form-control"> {{ act.contract_number }}</textarea><br>
+    Адрес объекта:
+    <textarea name="object_adress" id="object_adress" class="form-control">{{ act.object_adress }}</textarea><br>
+    Статус:
+    <textarea name="status" id="status" class="form-control">{{ act.status }}</textarea><br>
+    Основной текст:
+    <textarea name="text" id="text" class="form-control">{{ act.text }}</textarea><br>
+    <input type="submit" class="btn btn-success" value="Обновить">
+</form>
+</div>
+{% endblock %}

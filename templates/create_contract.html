@@ -1,20 +1,20 @@
 {% extends 'base.html' %}
 
 {% block title %}
-Create contract
+Создание договора
 {% endblock %}
 
 {% block body %}
 <div class="container mt-5">
-<H1>Create contract</H1>
+<H1>Создание договора</H1>
 <form method="POST">
-    Title:
+    Заголовок:
     <input type="text" name="title" id="title" class="form-control"><br>
-    Intro:
+    Аннотация:
     <textarea name="intro" id="intro" class="form-control"></textarea><br>
-    Main text:
+    Основной текст:
     <textarea name="text" id="text" class="form-control"></textarea><br>
-    <input type="submit" class="btn btn-success" value="Submit">
+    <input type="submit" class="btn btn-success" value="Создать">
 </form>
 </div>
 {% endblock %}

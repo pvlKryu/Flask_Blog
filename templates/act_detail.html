@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+
+{% block title %}
+{{ act.title }}
+{% endblock %}
+
+{% block body %}
+<div class="container mt-5">
+    <H1>{{ act.title }}</H1>   
+    
+    <div class="alert alert-info">
+        <p>{{ act.text }}</p> 
+        <p>Номер договора: {{ act.contract_number }}</p>
+        <p>Адрес объекта: {{ act.object_adress }}</p>
+        <p>Статус проверки: {{ act.status }}</p>
+        <p>{{ act.text }}</p>
+        <p> <b>Дата: {{ act.date.date() }} </b> </p>
+        
+        <a href="/acts/{{ act.id }}/del" class="btn btn-danger"> Удалить </a>
+        <a href="/acts/{{ act.id }}/update" class="btn btn-success"> Редактировать </a>
+
+    </div>
+</div>
+
+
+{% endblock %}

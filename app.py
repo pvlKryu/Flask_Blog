@@ -1,4 +1,4 @@
-from flask import Flask, render_template, url_for, request, redirect
+from flask import Flask, render_template, url_for, request, redirect, flash
 from flask_sqlalchemy import SQLAlchemy  # Подключение БД
 from datetime import date, datetime
 
@@ -110,19 +110,20 @@ def create_contract():
         title = request.form['title']  # Заполняем поля из формы
         intro = request.form['intro']
         text = request.form['text']
+
         # Создаем объект, заполняем поля, передавая переменные
         contract = Contract(title=title, intro=intro, text=text)
         try:  # Обрабатываем ошибки
-            # if title and intro and text:  # Проверка на заполненность
-            db.session.add(contract)  # Добавляем объект
-            db.session.commit()  # Сохраняем объект
-        # Если успешно - переводим на главную страницy:
-            return redirect('/contracts')
-        # return "dONE"
-        # else:
-        # return redirect('/create_contract')
+            if title and intro and text:  # Проверка на заполненность
+                db.session.add(contract)  # Добавляем объект
+                db.session.commit()  # Сохраняем объект
+                # Если успешно - переводим на главную страницy:
+                return redirect('/contracts')
+            else:
+                return "Заполните все поля"
+
         except:  # На случай ошибки
-            return "Error 1"
+            return render_template("create_contract.html")
         # traceback.format_exc() # Код ошибки
 
     else:
@@ -158,16 +159,19 @@ def create_act():
         act = Act(title=title, contract_number=contract_number,
                   object_adress=object_adress, status=status, text=text)
         try:  # Обрабатываем ошибки
-            # if title and intro and text:  # Проверка на заполненность
-            db.session.add(act)  # Добавляем объект
-            db.session.commit()  # Сохраняем объект
-        # Если успешно - переводим на главную страницy:
-            return redirect('/acts')
+            if title and contract_number and object_adress and status and text:  # Проверка на заполненность
+                # if title and intro and text:  # Проверка на заполненность
+                db.session.add(act)  # Добавляем объект
+                db.session.commit()  # Сохраняем объект
+                # Если успешно - переводим на главную страницy:
+                return redirect('/acts')
+            else:
+                return "Заполните все поля"
         # return "dONE"
         # else:
         # return redirect('/create_contract')
         except:  # На случай ошибки
-            return "Error 1"
+            return render_template("create_act.html")
         # traceback.format_exc() # Код ошибки
 
     else:

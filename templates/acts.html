@@ -14,7 +14,7 @@
             <h2>{{ el.title }}</h2> 
             <p>{{ el.status }}</p>
             <p> <b>Дата: {{ el.date.date() }} </b> </p>
-            <a href="/acts/{{ el.id }}" class="btn btn-warning"> Подробнее</a>
+            <a href="/acts/{{ el.act_id }}" class="btn btn-warning"> Подробнее</a>
         </div>
         {% endfor %}
     {% else: %}

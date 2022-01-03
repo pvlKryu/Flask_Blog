@@ -12,10 +12,14 @@ db = SQLAlchemy(app)  # Запускаем БД
 
 
 class Contract(db.Model):  # создаем класс Договоры
-    id = db.Column(db.Integer, primary_key=True)  # создаем поля
+    contract_id = db.Column(db.Integer, primary_key=True)  # создаем поля
+    object_id = db.Column(db.Integer)
+    client_id = db.Column(db.Integer)
+    worker_id = db.Column(db.Integer)
     title = db.Column(db.String(100), nullable=False)
     intro = db.Column(db.String(300), nullable=False)
     text = db.Column(db.Text, nullable=False)
+    cost = db.Column(db.Integer, nullable=False)
     date = db.Column(db.DateTime, default=datetime.utcnow)
 
     def __repr__(self):  # По запросу будет выдаваться объект + ID
@@ -23,7 +27,9 @@ class Contract(db.Model):  # создаем класс Договоры
 
 
 class Act(db.Model):  # создаем класс Акты проверок
-    id = db.Column(db.Integer, primary_key=True)  # создаем поля
+    act_id = db.Column(db.Integer, primary_key=True)  # создаем поля
+    contract_id = db.Column(db.Integer)
+    worker_id = db.Column(db.Integer)
     title = db.Column(db.String(100), nullable=False)
     contract_number = db.Column(db.String(100), nullable=False)
     object_adress = db.Column(db.String(100), nullable=False)
@@ -33,6 +39,36 @@ class Act(db.Model):  # создаем класс Акты проверок
 
     def __repr__(self):  # По запросу будет выдаваться объект + ID
         return '<Act %r>' % self.id
+
+
+class Client(db.Model):  # создаем класс Клиент
+    client_id = db.Column(db.Integer, primary_key=True)  # создаем поля
+    name = db.Column(db.String(100), nullable=False)
+    client_person = db.Column(db.String(100), nullable=False)
+
+    def __repr__(self):  # По запросу будет выдаваться объект + ID
+        return '<Client %r>' % self.id
+
+
+class Worker(db.Model):  # создаем класс Сотрудник
+    worker_id = db.Column(db.Integer, primary_key=True)  # создаем поля
+    name = db.Column(db.String(100), nullable=False)
+
+    def __repr__(self):  # По запросу будет выдаваться объект + ID
+        return '<Worker %r>' % self.id
+
+
+class Object(db.Model):  # создаем класс Объект
+    object_id = db.Column(db.Integer, primary_key=True)  # создаем поля
+    id_contract = db.Column(db.Integer, nullable=False)
+    adress = db.Column(db.String(300), nullable=False)
+    rooms_amount = db.Column(db.Integer, nullable=False)
+    entries_amount = db.Column(db.Integer, nullable=False)
+    windows_amount = db.Column(db.Integer, nullable=False)
+    people_object = db.Column(db.String(300), nullable=False)
+
+    def __repr__(self):  # По запросу будет выдаваться объект + ID
+        return '<Object %r>' % self.id
 
 
 @app.route('/')
@@ -62,18 +98,18 @@ def acts():
     return render_template("acts.html", acts=acts)
 
 
-@app.route('/contracts/<int:id>')
-def contract_detail(id):
+@app.route('/contracts/<int:contract_id>')
+def contract_detail(contract_id):
     # Выводим все записи из БД сортируя по дате:
-    contract = Contract.query.get(id)
+    contract = Contract.query.get(contract_id)
     # в шаблон передаем список контрактов
     return render_template("contract_detail.html", contract=contract)
 
 
-@app.route('/contracts/<int:id>/del')
-def contract_delet(id):
+@app.route('/contracts/<int:contract_id>/del')
+def contract_delet(contract_id):
     # Ищем нужную запись в БД:
-    contract = Contract.query.get_or_404(id)
+    contract = Contract.query.get_or_404(contract_id)
 
     try:
         db.session.delete(contract)
@@ -83,10 +119,10 @@ def contract_delet(id):
         return "При удалении статьи произошла ошибка"
 
 
-@app.route('/acts/<int:id>/del')
-def act_delet(id):
+@app.route('/acts/<int:act_id>/del')
+def act_delet(act_id):
     # Ищем нужную запись в БД:
-    act = Act.query.get_or_404(id)
+    act = Act.query.get_or_404(act_id)
 
     try:
         db.session.delete(act)
@@ -96,10 +132,10 @@ def act_delet(id):
         return "При удалении статьи произошла ошибка"
 
 
-@app.route('/acts/<int:id>')
-def act_detail(id):
+@app.route('/acts/<int:act_id>')
+def act_detail(act_id):
     # Выводим все записи из БД сортируя по дате:
-    act = Act.query.get(id)
+    act = Act.query.get(act_id)
     # в шаблон передаем список контрактов
     return render_template("act_detail.html", act=act)
 
@@ -110,11 +146,12 @@ def create_contract():
         title = request.form['title']  # Заполняем поля из формы
         intro = request.form['intro']
         text = request.form['text']
+        cost = request.form['cost']
 
         # Создаем объект, заполняем поля, передавая переменные
-        contract = Contract(title=title, intro=intro, text=text)
+        contract = Contract(title=title, intro=intro, text=text, cost=cost)
         try:  # Обрабатываем ошибки
-            if title and intro and text:  # Проверка на заполненность
+            if title and intro and text and cost:  # Проверка на заполненность
                 db.session.add(contract)  # Добавляем объект
                 db.session.commit()  # Сохраняем объект
                 # Если успешно - переводим на главную страницy:
@@ -130,13 +167,14 @@ def create_contract():
         return render_template("create_contract.html")
 
 
-@app.route('/contracts/<int:id>/update', methods=['POST', 'GET'])
-def contracts_update(id):
-    contract = Contract.query.get(id)  # Ищем объект
+@app.route('/contracts/<int:contract_id>/update', methods=['POST', 'GET'])
+def contracts_update(contract_id):
+    contract = Contract.query.get(contract_id)  # Ищем объект
     if request.method == "POST":
         contract.title = request.form['title']  # Заполняем поля из формы
         contract.intro = request.form['intro']
         contract.text = request.form['text']
+        contract.cost = request.form['cost']
 
         try:  # Обрабатываем ошибки
             db.session.commit()  # Сохраняем объект
@@ -167,9 +205,6 @@ def create_act():
                 return redirect('/acts')
             else:
                 return "Заполните все поля"
-        # return "dONE"
-        # else:
-        # return redirect('/create_contract')
         except:  # На случай ошибки
             return render_template("create_act.html")
         # traceback.format_exc() # Код ошибки
@@ -178,9 +213,9 @@ def create_act():
         return render_template("create_act.html")
 
 
-@app.route('/acts/<int:id>/update', methods=['POST', 'GET'])
-def acts_update(id):
-    act = Act.query.get(id)  # Ищем объект
+@app.route('/acts/<int:act_id>/update', methods=['POST', 'GET'])
+def acts_update(act_id):
+    act = Act.query.get(act_id)  # Ищем объект
     if request.method == "POST":
         act.title = request.form['title']  # Заполняем поля из формы
         act.contract_number = request.form['contract_number']
@@ -199,6 +234,12 @@ def acts_update(id):
 @app.route('/signin')
 def signin():
     return render_template("signin.html")
+
+
+# @app.route('/director_report')
+# def director_report():
+
+#     return render_template("director_report.html")
 
 
 if __name__ == "__main__":

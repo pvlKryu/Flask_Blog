@@ -9,12 +9,13 @@
     <H1>{{ contract.title }}</H1>   
     
     <div class="alert alert-info">
-        <p>{{ contract.text }}</p> 
-        <p>{{ contract.intro }}</p>
-        <p> <b>Date: {{ contract.date.date() }} </b> </p>
+        <p><b>Вступительная часть:</b> {{ contract.intro }}</p>
+        <p><b>Основная часть:</b> {{ contract.text }}</p> 
+        <p> <b>Стоимость:</b> {{ contract.cost }} рублей</p>
+        <p> <b>Дата:</b> {{ contract.date.date() }}  </p>
 
-        <a href="/contracts/{{ contract.id }}/del" class="btn btn-danger"> Удалить </a>
-        <a href="/contracts/{{ contract.id }}/update" class="btn btn-success"> Редактировать </a>
+        <a href="/contracts/{{ contract.contract_id }}/del" class="btn btn-danger"> Удалить </a>
+        <a href="/contracts/{{ contract.contract_id }}/update" class="btn btn-success"> Редактировать </a>
         
     </div>
 </div>

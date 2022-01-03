@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Отчет для директора
+{% endblock %}
+
+{% block body %}
+<div class="container mt-5">
+    <H1>Отчет за все время</H1>   
+    {% if contracts|length > 0 %}
+        <!-- На вход получаем список, который нужно перебрать -->
+        {% for el in contracts %} 
+        <div class="alert alert-info">
+            
+            <h2>Всего было составлено: {{  el.title }} договоров</h2> 
+            <h2>Всего было выполнено: {{  el.title }} проверок</h2> 
+            <!-- <h2>{{ el.title }}</h2>  -->
+            <!-- <p>{{ el.intro }}</p> -->
+            <!-- <p> <b>Дата: {{ el.date.date() }} </b> </p> -->
+            <!-- <a href="/contracts/{{ el.id }}" class="btn btn-warning"> Подробнее </a> -->
+        </div>
+        {% endfor %}
+    {% else: %}
+    <p>В базе данных нет договоров</p>
+    {% endif %}
+</div>
+
+
+{% endblock %}

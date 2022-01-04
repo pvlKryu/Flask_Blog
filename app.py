@@ -1,4 +1,4 @@
-from flask import Flask, render_template, url_for, request, redirect, flash
+from flask import Flask, render_template, url_for, request, redirect
 from flask_sqlalchemy import SQLAlchemy  # Подключение БД
 from datetime import date, datetime
 
@@ -84,22 +84,37 @@ def about():
 
 @app.route('/contracts')
 def contracts():
-    # Выводим все записи из БД сортируя по дате:
-    contracts = Contract.query.order_by(Contract.date.desc()).all()
-    # в шаблон передаем список контрактов
+
+    q = request.args.get('q')
+
+    if q:
+        contracts = Contract.query.filter(Contract.title.contains(q) | Contract.text.contains(
+            q) | Contract.contract_id.contains(q) | Contract.intro.contains(q)).all()
+    else:
+        # Выводим все записи из БД сортируя по дате:
+        contracts = Contract.query.order_by(Contract.date.desc()).all()
+        # в шаблон передаем список контрактов
     return render_template("contracts.html", contracts=contracts)
 
 
 @app.route('/acts')
 def acts():
-    # Выводим все записи из БД сортируя по дате:
-    acts = Act.query.order_by(Act.date.desc()).all()
-    # в шаблон передаем список контрактов
+
+    q = request.args.get('q')
+
+    if q:
+        acts = Act.query.filter(Act.title.contains(q) | Act.text.contains(
+            q) | Act.act_id.contains(q) | Act.status.contains(q) | Act.object_adress.contains(q)).all()
+    else:
+        # Выводим все записи из БД сортируя по дате:
+        acts = Act.query.order_by(Act.date.desc()).all()
+        # в шаблон передаем список контрактов
     return render_template("acts.html", acts=acts)
 
 
 @app.route('/contracts/<int:contract_id>')
 def contract_detail(contract_id):
+
     # Выводим все записи из БД сортируя по дате:
     contract = Contract.query.get(contract_id)
     # в шаблон передаем список контрактов
@@ -134,6 +149,7 @@ def act_delet(act_id):
 
 @app.route('/acts/<int:act_id>')
 def act_detail(act_id):
+
     # Выводим все записи из БД сортируя по дате:
     act = Act.query.get(act_id)
     # в шаблон передаем список контрактов

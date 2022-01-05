@@ -1,8 +1,12 @@
 from flask import Flask, render_template, url_for, request, redirect
+#from config import Configuration
 from flask_sqlalchemy import SQLAlchemy  # Подключение БД
+from flask_migrate import Migrate
 from datetime import date, datetime
 
 from werkzeug.utils import redirect  # Импорт функции реального времени
+
+
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///ovo.db'  # Создаем БД
@@ -10,6 +14,7 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)  # Запускаем БД
 # db.create_all()
 
+migrate = Migrate(app, db) #Миграция для обновления БД (система контроля версий БД)
 
 class Contract(db.Model):  # создаем класс Договоры
     contract_id = db.Column(db.Integer, primary_key=True)  # создаем поля
@@ -251,6 +256,13 @@ def acts_update(act_id):
 def signin():
     return render_template("signin.html")
 
+@app.route('/law')
+def law():
+    return render_template("law.html")
+    
+@app.route('/rules')
+def rules():
+    return render_template("rules.html")    
 
 # @app.route('/director_report')
 # def director_report():

@@ -12,10 +12,18 @@
     <input type="text" name="title" id="title" class="form-control" value="{{ contract.title }}" ><br>
     Аннотация:
     <textarea name="intro" id="intro" class="form-control" >{{ contract.intro }}</textarea><br>
+    ФИО Клиента:
+    <textarea name="client_name" id="client_name" class="form-control">{{ contract.client_name }}</textarea><br>
+    Тип услуги:
+    <textarea name="type_service" id="type_service" class="form-control">{{ contract.type_service }}</textarea><br>
     Основной текст:
     <textarea name="text" id="text" class="form-control" >{{ contract.text }}</textarea><br>
-    Стоимость:
+    Стоимость(Р):
     <textarea name="cost" id="cost" class="form-control" >{{ contract.cost }}</textarea><br>
+    Ответственное лицо клиента:
+    <textarea name="client_person" id="client_person" class="form-control">{{ contract.client_person }}</textarea><br>
+    Адрес объекта:
+    <textarea name="object_adres" id="object_adres" class="form-control">{{ contract.object_adres }}</textarea><br>
     <input type="submit" class="btn btn-success" value="Обновить">
 </form>
 </div>

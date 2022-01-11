@@ -17,10 +17,15 @@
         <!-- На вход получаем список, который нужно перебрать -->
         {% for el in acts %} 
         <div class="alert alert-info">
-            <h2>{{ el.title }}</h2> 
-            <p>{{ el.status }}</p>
+            <p><b>Заголовок: </b>{{ el.title }}</p> 
+            <p><b>Статус проверки: </b>{{ el.status }}</p>
+            <p><b>Номер договора: </b>{{ el.contract_number }}</p>
             <p> <b>Дата: {{ el.date.date() }} </b> </p>
-            <a href="/acts/{{ el.act_id }}" class="btn btn-warning"> Подробнее</a>
+            <a href="/acts/{{ el.act_id }}" class="btn btn-success"> Просмотр</a>
+            <a href="/acts/{{ el.act_id }}/update" class="btn btn-warning"> Редактировать </a>
+            <a href="/acts/{{ el.act_id }}/del" class="btn btn-danger"> Удалить </a>
+            
+
         </div>
         {% endfor %}
     {% else: %}

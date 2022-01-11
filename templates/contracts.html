@@ -22,10 +22,15 @@
         <!-- На вход получаем список, который нужно перебрать -->
         {% for el in contracts %} 
         <div class="alert alert-info">
-            <h2>{{ el.title }}</h2> 
-            <p>{{ el.intro }}</p>
-            <p> <b>Дата: {{ el.date.date() }} </b> </p>
-            <a href="/contracts/{{ el.contract_id }}" class="btn btn-warning"> Подробнее </a>
+            <p> <b>Заголовок: </b> {{ el.title }}</p> 
+            <p><b>Аннотация: </b> {{ el.intro }}</p>
+            <p><b>ФИО клиента: </b> {{ el.client_name }}</p>
+            <p><b>Номер договора: </b> {{ el.contract_id }} </p>
+            <p><b>Дата: </b> {{ el.date.date() }} </p>
+            <a href="/contracts/{{ el.contract_id }}" class="btn btn-success"> Просмотр </a>
+            <a href="/contracts/{{ el.contract_id }}/update" class="btn btn-warning"> Редактировать </a>
+            <a href="/contracts/{{ el.contract_id }}/del" class="btn btn-danger"> Удалить </a>
+            
         </div>
         {% endfor %}
     {% else: %}

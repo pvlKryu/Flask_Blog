@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Все договоры
+{% endblock %}
+
+{% block body %}
+<div class="container mt-5">
+    <div class="container d-flex justify-content-between ">
+        <H1>Акты проверок  </H1>   
+        <form class="form-inline my-2 my-lg-0">
+            <input class="form-control mr-sm-2" type="search" placeholder="Поиск" aria-label="Search" name="q" value="{{ request.args.get('q', '') }} ">
+            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Найти</button>
+        </form>
+    </div>
+    {% if acts|length > 0 %}
+        <!-- На вход получаем список, который нужно перебрать -->
+        {% for el in acts %} 
+        <div class="alert alert-info">
+            <p><b>Заголовок: </b>{{ el.title }}</p> 
+            <p><b>Статус проверки: </b>{{ el.status }}</p>
+            <p><b>Номер договора: </b>{{ el.contract_number }}</p>
+            <p> <b>Дата: {{ el.date.date() }} </b> </p>
+            <a href="/acts/{{ el.act_id }}" class="btn btn-success"> Просмотр</a>
+            <a href="/acts/{{ el.act_id }}/update" class="btn btn-warning"> Редактировать </a>
+            <a href="/acts/{{ el.act_id }}/del" class="btn btn-danger"> Удалить </a>
+            
+
+        </div>
+        {% endfor %}
+    {% else: %}
+    <p>В вашей базе данных нет актов проверок</p>    
+    {% endif %}
+</div>
+
+
+{% endblock %}

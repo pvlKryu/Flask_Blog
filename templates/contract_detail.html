@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+
+{% block title %}
+{{ contract.title }}
+{% endblock %}
+
+{% block body %}
+<div class="container mt-5">
+    <H1>{{ contract.title }}</H1>   
+    
+    <div class="alert alert-info">
+        <p><b>Аннотация:</b> {{ contract.intro }}</p>
+        <p><b>ФИО клиента:</b> {{ contract.client_name }}</p>
+        <p><b>Номер договора: </b> {{ contract.contract_id }} </p>
+        <p><b>Тип услуги:</b> {{ contract.type_service }}</p>
+        <p><b>Основная часть:</b> {{ contract.text }}</p> 
+        <p> <b>Стоимость:</b> {{ contract.cost }} рублей</p>
+        <p> <b>Ответственное лицо клиента:</b> {{ contract.client_person }} </p>
+        <p> <b>Адрес объекта:</b> {{ contract.object_adres }} </p>
+        <p> <b>Дата:</b> {{ contract.date.date() }}  </p>
+
+        <a href="/contracts/{{ contract.contract_id }}/del" class="btn btn-danger"> Удалить </a>
+        <a href="/contracts/{{ contract.contract_id }}/update" class="btn btn-success"> Редактировать </a>
+        
+    </div>
+</div>
+
+
+{% endblock %}

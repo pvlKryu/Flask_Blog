@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Отчет для директора
+{% endblock %}
+
+{% block body %}
+<div class="container mt-5">
+    <!-- <H1>Краткий отчет для директора по основной деятельности ОВО полиции за весь временной интервал</H1>    -->
+        <div class="alert alert-info">
+            <p align="center"><strong>КРАТКИЙ ОТЧЕТ </strong></p>
+            <p align="center"><strong>По деятельности ОВО Полиции</strong></p>                   
+            <p align="right">Дата составления отчета <span style="color: #ff6600;">{{ now }}</span>  </p>
+            <p align="right">г. Владивосток </p>  
+            <p>В рамках основной деятельности ОВО Полиции было заключено <span style="color: #ff6600;">{{ contract_amount }}</span> договоров.</p>
+            <!-- <p><b>Всего договоров было составлено - </b> {{ contract_amount }} <p>  -->
+            <p>Общий доход по договорам составил  <span style="color: #ff6600;">{{ contract_sum }}</span> рублей.<p> 
+            <p>Всего  было выполнено   <span style="color: #ff6600;">{{ act_amount }}</span> проверок. Из них:  <span style="color: #ff6600;">{{ fake_act_amount }}</span> ложных вызовов,  <span style="color: #ff6600;">{{ real_act_amount }} </span> реальных.<p> 
+             
+            <br> 
+            <p><b>Дата составления отчета: </b> <span style="color: #ff6600;">{{ now }}</span> <p> 
+            
+
+         
+        </div>
+        
+    
+   
+</div>
+
+
+{% endblock %}

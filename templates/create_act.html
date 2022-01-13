@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Создание акта проверки
+{% endblock %}
+
+{% block body %}
+<div class="container mt-5">
+<H1>Cоздание акта проверки имущества</H1>
+<form method="POST">
+
+    Заголовок:
+    <input type="text" name="title" id="title" class="form-control"><br>
+    Номер договора:
+    <textarea name="contract_number" id="contract_number" class="form-control"></textarea><br>
+    Адрес объекта:
+    <textarea name="object_adress" id="object_adress" class="form-control"></textarea><br>
+    Статус:
+    <textarea name="status" id="status" class="form-control"></textarea><br>
+    Основной текст:
+    <textarea name="text" id="text" class="form-control"></textarea><br>
+    <input type="submit" class="btn btn-success" value="Submit">
+</form>
+</div>
+{% endblock %}

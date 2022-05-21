@@ -14,3 +14,11 @@ As part of the course work, it is required to develop a software tool for the se
 • automated preparation of the necessary reports for the director and the client;
 <br>
 • output of documents (reports) for printing.
+## Outpoot examples <br>
+### Creating contract page:<br>
+![image](https://user-images.githubusercontent.com/57821178/169657629-9b8ff2b0-6781-4eb0-a231-912fa3cdd67c.png)
+### Contract preview page:
+![image](https://user-images.githubusercontent.com/57821178/169657655-bcdc4dcd-f12f-4666-986f-299a66425912.png)
+### Up footer menu block:
+![image](https://user-images.githubusercontent.com/57821178/169657693-1d45d093-1fe2-4604-84e2-c324b68d256f.png)
+
